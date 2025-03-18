@@ -37,9 +37,13 @@
                     <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                 </a>
 
-                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                    <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                </a>
+                <form action="{% url 'delete' employee.id %}" method="POST"  >
+                    {% csrf_token %}
+                    <button type="submit" class='delete' style="background: none; border: none; color: red; position: relative; left: 19px; top: -27px;">
+                        <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                    </button>
+                </form>
+                
             </td>
 
         </tr>
