@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic import ListView, View, DeleteView, CreateView, UpdateView
 from .models import EmployeeModel
 from .forms import EmployeeForm
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
 class IndexView(ListView):
@@ -59,40 +59,40 @@ class CreateView(View):
     
 
     
-class UpdateViewEmployee(View):
-    def get_employee(self, id=None):
-        if id is not None:
-            return get_object_or_404(EmployeeModel, id=id)
+# class UpdateViewEmployee(View):
+#     def get_employee(self, id=None):
+#         if id is not None:
+#             return get_object_or_404(EmployeeModel, id=id)
         
-    def render_page(self, employee, form):
-        context = {
-            'employee': employee,
-            'form': form
-        }
+#     def render_page(self, employee, form):
+#         context = {
+#             'employee': employee,
+#             'form': form
+#         }
         
-        return render(self.request, 'partials/sections/modal/edit_modal.html')
+#         return render(self.request, 'partials/sections/modal/edit_modal.html')
     
-    def get(self, request, id):
-        employee = self.get_employee(id=id)
-        form = EmployeeForm(instance=employee)
+#     def get(self, request, id):
+#         employee = self.get_employee(id=id)
+#         form = EmployeeForm(instance=employee)
         
-        return self.render_page(employee, form)
+#         return self.render_page(employee, form)
     
-    def post(self, request, id):
-        employee = self.get_employee(id)
-        form = EmployeeForm(data=request.POST, instance=employee)
+#     def post(self, request, id):
+#         employee = self.get_employee(id)
+#         form = EmployeeForm(data=request.POST, instance=employee)
         
-        if form.is_valid():
-            form.save()
+#         if form.is_valid():
+#             form.save()
             
-            form = EmployeeForm()
-            messages.success(request, 'Funcionario atualizado com Sucesso')
+#             form = EmployeeForm()
+#             messages.success(request, 'Funcionario atualizado com Sucesso')
             
-            return redirect(reverse('index'))
+#             return redirect(reverse('index'))
 
-        else:
-            print(form.errors)
-            messages.error(request, 'Erro! Tente Novamente.')
-            return redirect(reverse('index'))
+#         else:
+#             print(form.errors)
+#             messages.error(request, 'Erro! Tente Novamente.')
+#             return redirect(reverse('index'))
 
-        return self.render_page(employee, form)
+#         return self.render_page(employee, form)

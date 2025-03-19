@@ -2,7 +2,7 @@
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{% url 'update_employee' employee.id %}" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Funcionário {{ employee.name }}</h4>
