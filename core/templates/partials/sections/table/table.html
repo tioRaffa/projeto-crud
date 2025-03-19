@@ -33,7 +33,7 @@
             <td>{{ employee.phone }}</td>
 
             <td>
-                <a href="#editEmployeeModal" class="edit" data-toggle="modal">
+                <a href="{% url 'update_employee' employee.id %}" class="edit" data-toggle="modal" data-target="#editEmployeeModal">
                     <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                 </a>
 

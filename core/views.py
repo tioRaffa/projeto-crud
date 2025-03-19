@@ -74,13 +74,12 @@ class UpdateViewEmployee(View):
     
     def get(self, request, id):
         employee = self.get_employee(id=id)
-        form = EmployeeForm()
+        form = EmployeeForm(instance=employee)
         
         return self.render_page(employee, form)
     
     def post(self, request, id):
         employee = self.get_employee(id)
-        
         form = EmployeeForm(data=request.POST, instance=employee)
         
         if form.is_valid():
@@ -96,4 +95,4 @@ class UpdateViewEmployee(View):
             messages.error(request, 'Erro! Tente Novamente.')
             return redirect(reverse('index'))
 
-        return self.render_page(request, form)
+        return self.render_page(employee, form)
