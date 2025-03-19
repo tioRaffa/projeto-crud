@@ -1,6 +1,6 @@
 {% extends 'global/crud/base.html' %}
 {% load static %}
-
+{% load bootstrap4 %}
 
 <!-- HEAD -->
 {% block links %}
@@ -23,6 +23,8 @@
 			
 			<!-- HEAD TABLE -->
 			{% include 'partials/sections/table/head_table.html' %}
+			{% bootstrap_messages %}
+			
 				
 			<!-- TABLE -->
 			{% include 'partials/sections/table/table.html' %}
@@ -43,5 +45,5 @@
 <!-- Delete Modal HTML -->
 {% include 'partials/sections/modal/delete_modal.html' %}
 
-
+{% bootstrap_javascript jquery='full' %}
 {% endblock content %}
