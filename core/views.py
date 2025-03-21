@@ -1,31 +1,36 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import ListView, View, DeleteView, CreateView, UpdateView
 from .models import EmployeeModel
-from .forms import EmployeeForm
+from .forms import EmployeeForm, EmployeeUpdateForm
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.http import JsonResponse
 class IndexView(ListView):
     model = EmployeeModel
-    queryset = EmployeeModel.objects.all()
+    queryset = EmployeeModel.objects.all().order_by('-id')
     template_name = 'pages/index.html'
     context_object_name = 'employees'
     
     
 class DeleteModal(View):
-    def get_employee(self, request, id):
+    def get_employee(self, id):
         return get_object_or_404(EmployeeModel, id=id)
     
-    def redirect_page(self):
-        return redirect('index')
+    def render_page(self, request, employee):
+        context = {'employee': employee}
+        return render(request, 'partials/sections/modal/form_delete.html', context=context)
+    
+    def get(self, request, id):
+        employee = self.get_employee(id=id)
+        return self.render_page(request, employee)
     
     def post(self, request, id):
-        employee = self.get_employee(request, id)
+        employee = self.get_employee(id)
         employee.delete()
-        messages.success(request, 'Funcionario removido com Sucesso')
+        messages.success(request, 'Funcionario Removido com sucesso!')
         
-        return self.redirect_page()
-    
+        return redirect(reverse('index'))
 
 class CreateView(View):
     def render_page(self, request, form):
@@ -59,40 +64,39 @@ class CreateView(View):
     
 
     
-# class UpdateViewEmployee(View):
-#     def get_employee(self, id=None):
-#         if id is not None:
-#             return get_object_or_404(EmployeeModel, id=id)
+class UpdateView(View):
+    def get_employee(self, id=None):
+        if id is not None:
+            return get_object_or_404(EmployeeModel, id=id)
         
-#     def render_page(self, employee, form):
-#         context = {
-#             'employee': employee,
-#             'form': form
-#         }
+    def render_page(self, employee, form):
+        context = {
+            'employee': employee,
+            'form': form
+        }
         
-#         return render(self.request, 'partials/sections/modal/edit_modal.html')
+        return render(self.request, 'partials/sections/modal/form_edit.html', context=context)
     
-#     def get(self, request, id):
-#         employee = self.get_employee(id=id)
-#         form = EmployeeForm(instance=employee)
+    def get(self, request, id):
+        employee = self.get_employee(id=id)
+        form = EmployeeUpdateForm(data=request.POST or None, instance=employee)
         
-#         return self.render_page(employee, form)
+        return render(request, 'partials/sections/modal/form_edit.html', {'employee': employee, 'form': form})
     
-#     def post(self, request, id):
-#         employee = self.get_employee(id)
-#         form = EmployeeForm(data=request.POST, instance=employee)
+    def post(self, request, id):
+        employee = self.get_employee(id)
+        form = EmployeeUpdateForm(data=request.POST or None, instance=employee)
         
-#         if form.is_valid():
-#             form.save()
+        if form.is_valid():
+            form.save()
+            form = EmployeeUpdateForm()
+            messages.success(request, 'Funcionario atualizado com Sucesso')
             
-#             form = EmployeeForm()
-#             messages.success(request, 'Funcionario atualizado com Sucesso')
-            
-#             return redirect(reverse('index'))
+            return redirect(reverse('index'))
 
-#         else:
-#             print(form.errors)
-#             messages.error(request, 'Erro! Tente Novamente.')
-#             return redirect(reverse('index'))
+        else:
+            print(form.errors)
+            messages.error(request, 'Erro! Tente Novamente.')
+            return redirect(reverse('index'))
 
-#         return self.render_page(employee, form)
+        return self.render_page(employee, form)

@@ -1,5 +1,4 @@
 {% load static %}
-
 <table class="table table-striped table-hover">
     <thead>
         <tr>
@@ -18,36 +17,7 @@
     </thead>
 
     <tbody>
-    {% for employee in employees %}
-        <tr>
-            <td>
-                <span class="custom-checkbox">
-                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                    <label for="checkbox1"></label>
-                </span>
-            </td>
-
-            <td>{{ employee.name }}</td>
-            <td>{{ employee.email }}</td>
-            <td>{{ employee.adress }}</td>
-            <td>{{ employee.phone }}</td>
-
-            <td>
-                <a href="#editEmployeeModal" class="edit" data-toggle="modal" data-target="#editEmployeeModal">
-                    <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                </a>
-
-                <form action="{% url 'delete' employee.id %}" method="POST"  >
-                    {% csrf_token %}
-                    <button type="submit" class='delete' style="background: none; border: none; color: red; position: relative; left: 19px; top: -27px;">
-                        <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                    </button>
-                </form>
-                
-            </td>
-
-        </tr>
-    {% endfor %}
+    {% include 'partials/sections/table/employee_list.html' %}
 
     </tbody>
 </table>

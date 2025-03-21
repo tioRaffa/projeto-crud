@@ -33,3 +33,8 @@ class EmployeeForm(forms.ModelForm):
                 'Este Telefone ja foi cadastrado!'
             )
         return data_phone
+    
+class EmployeeUpdateForm(forms.ModelForm):
+    class Meta:
+        model = EmployeeModel
+        fields = ['name', 'email', 'adress', 'phone']

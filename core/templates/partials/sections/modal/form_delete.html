@@ -1,0 +1,20 @@
+<form action="{{ request.path }}" method="POST" enctype="multipart/form-data" class="modal-content">
+    {% csrf_token %}
+
+    <div class="modal-header">						
+        <h4 class="modal-title">Remover Funcionário | {{ employee.name }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+
+    <div class="modal-body">					
+        <p>Tem certeza de que deseja excluir os registros?</p>
+        <p class="text-warning"><small>Esta ação não pode ser desfeita.</small></p>
+    </div>
+
+
+    <div class="modal-footer">
+        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+        <input type="submit" class="btn btn-danger" value="Remover">
+    </div>
+
+</form>

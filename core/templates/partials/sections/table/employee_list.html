@@ -1,0 +1,32 @@
+{% for employee in employees %}
+    <tr>
+        <td>
+            <span class="custom-checkbox">
+                <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                <label for="checkbox1"></label>
+            </span>
+        </td>
+
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.adress }}</td>
+        <td>{{ employee.phone }}</td>
+
+        <td>
+            <a href="#" class="edit" data-toggle="modal" data-target="#editEmployeeModal" 
+            hx-get="{% url 'update_employee' employee.id %}" 
+            hx-target="#uptdate_content">
+                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+            </a>
+
+            <a href="#" class="delete" data-toggle="modal" data-target="#deleteEmployeeModal"
+            hx-get="{% url 'delete_employee' employee.id %}"
+            hx-target="#delete_content">
+                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+            </a>
+            
+        </td>
+
+    </tr>
+    {% endfor %}
+

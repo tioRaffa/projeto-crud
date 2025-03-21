@@ -1,7 +1,7 @@
 {% load bootstrap4 %}
 <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content" id="addContent">
 			<form action="{% url 'create_employee' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
@@ -9,6 +9,8 @@
 					<h4 class="modal-title">Add Employee</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
+
+				<!-- MODAL BODY -->
 				<div class="modal-body">	
 
 					<div class="form-group">
@@ -28,11 +30,15 @@
 						<input type="text" class="form-control" required name="phone">
 					</div>					
 				</div>
+				
+				<!-- MODAL FOOTER -->
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 					<input type="submit" class="btn btn-success" value="Add">
 				</div>
+				
 			</form>
+
 		</div>
 	</div>
 </div>
